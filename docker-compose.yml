@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    build: .
+    command: /bin/sh -c 'npm start'
+    ports:
+      - 8888:8888
+      - 1234:1234
+      - 3000:3000
+      - 3035:3035
+      - 26162:26162
