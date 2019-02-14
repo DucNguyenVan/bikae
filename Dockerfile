@@ -3,7 +3,7 @@ FROM node:8
 # Create app directory
 WORKDIR /bikae
 
-RUN npm install && npm install puppeteer express body-parser
+RUN npm install && npm install puppeteer express body-parser request
 # If you are building your code for production
 # RUN npm install --only=production
 
@@ -47,7 +47,7 @@ libappindicator1 \
 libnss3 \
 lsb-release \
 xdg-utils \
-wget 
+wget
 
 # Japanese font
 #RUN echo 'deb http://ftp.jp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
