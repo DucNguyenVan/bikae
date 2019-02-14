@@ -3,7 +3,7 @@ FROM node:8
 # Create app directory
 WORKDIR /bikae
 
-RUN npm install && npm install puppeteer
+RUN npm install && npm install puppeteer express body-parser
 # If you are building your code for production
 # RUN npm install --only=production
 
