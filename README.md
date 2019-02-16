@@ -12,3 +12,7 @@ Step 4(need or not): At container, run
 
 Step 5: copy image form container to host. At host, run
 `docker cp bikae_app_1:/bikae/example.png ~/Desktop/screenshots`
+
+
+# User puppeteer with heroku
+https://github.com/CoffeeAndCode/puppeteer-heroku-buildpack
