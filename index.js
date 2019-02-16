@@ -82,7 +82,7 @@ function handleMessage(sender_psid, received_message) {
   let response;
 
   // Check if the message contains text
-  if (received_message.text && received_message.text == "next") {
+  if (received_message.text && received_message.text.toLowerCase() == "next") {
     (async () => {
       const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
         const page = await browser.newPage();
@@ -102,7 +102,7 @@ function handleMessage(sender_psid, received_message) {
         console.log(href)
         await page.goto(href);
         const grammar = await page.evaluate(() => {
-          return document.querySelector('.entry-content').firstElementChild.textContent
+          return document.querySelector('.entry-header .entry-title').textContent
         })
         console.log(grammar)
         await browser.close();
