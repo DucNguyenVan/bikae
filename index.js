@@ -106,15 +106,15 @@ function handleMessage(sender_psid, received_message) {
         })
         console.log(grammar)
         await browser.close();
-      })();
-    // Create the payload for a basic text message
-    response = {
-      "text": `${href} \n ${grammar}`
-    }
-  }
 
-  // Sends the response message
-  callSendAPI(sender_psid, response);
+      // Create the payload for a basic text message
+        response = {
+          "text": `${grammar} \n ${href}`
+        }
+         // Sends the response message
+        callSendAPI(sender_psid, response);
+      })();
+  }
 }
 
 // Handles messaging_postbacks events
