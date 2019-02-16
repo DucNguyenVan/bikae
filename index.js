@@ -6,6 +6,7 @@ const
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
 const request = require('request');
+const puppeteer = require('puppeteer');
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 8080, () => console.log('webhook is listening'));
 
@@ -81,11 +82,34 @@ function handleMessage(sender_psid, received_message) {
   let response;
 
   // Check if the message contains text
-  if (received_message.text) {
-
+  if (received_message.text && received_message.text == "next") {
+    (async () => {
+      const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+        const page = await browser.newPage();
+        await page.setRequestInterception(true);
+        page.on('request', interceptedRequest => {
+          if (!interceptedRequest.url().includes('bikae.net'))
+            interceptedRequest.abort();
+          else
+            interceptedRequest.continue();
+        });
+        await page.goto('https://bikae.net/ngu-phap/tong-hop-ngu-phap-n2/');
+        const href = await page.evaluate(() => {
+          var sum = document.querySelectorAll('.entry-content li a').length
+          const rd_idx = (Math.random(0,sum/100)*100).toFixed();
+          return document.querySelectorAll('.entry-content li span a')[rd_idx].href
+        })
+        console.log(href)
+        await page.goto(href);
+        const grammar = await page.evaluate(() => {
+          return document.querySelector('.entry-content').firstElementChild.textContent
+        })
+        console.log(grammar)
+        await browser.close();
+      })();
     // Create the payload for a basic text message
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      "text": `${href} \n ${grammar}`
     }
   }
 
